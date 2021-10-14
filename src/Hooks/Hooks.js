@@ -1,4 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+
+function Clock() {
+  const [time, setTime] = useState(() => new Date());
+  const intervalId = useRef(null);
+
+  useEffect(() => {
+    intervalId.current = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+  }, []);
+
+  const stop = () => {
+    clearInterval(intervalId.current);
+  };
+}
+Clock();
 
 export default function SingUpForm() {
   const [email, setEmail] = useState(() => {
