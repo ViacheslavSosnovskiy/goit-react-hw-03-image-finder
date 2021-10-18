@@ -2,8 +2,9 @@ import { Component } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-// import { ToastContainer } from "react-toastify";
-// import "./App.css";
+
+import Loader from "react-loader-spinner";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 import ImageGallery from "./ImageGallery";
 import Searchbar from "./Searchbar";
@@ -11,46 +12,98 @@ import Searchbar from "./Searchbar";
 // import Loader from "./Loader";
 // import Modal from "./Modal";
 
+import FetchApi from "../services/FetchApi";
+
 class App extends Component {
   state = {
     query: "",
-    showModal: false,
+    page: 1,
+    error: null,
+    status: "IDLE",
+    // showModal: false,
   };
 
-  // componentDidMount() {
-  //   // const { page } = this.state;
-  //   fetch()
-  //     // `${BASE_URL}?q=###&page=1&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-  //     .then((res) => res.json())
-  //     .then(console.log);
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    const prevQuery = prevProps.query;
+    const nextQuery = this.state.query;
+    const { page } = this.state;
+
+    if (prevQuery !== nextQuery) {
+      this.setState({ status: "PENDING" });
+
+      FetchApi.searchApi(nextQuery, page)
+        .then((query) => this.setState({ prevState, status: "RESOLVED" }))
+        .catch((error) => this.setState({ error, status: "REJECTED" }));
+      // .finally(() => this.setState({ loading: false }));
+    }
+  }
 
   handleFormSubmit = (query) => {
     this.setState({ query });
   };
 
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
-    }));
-  };
+  // toggleModal = () => {
+  //   this.setState(({ showModal }) => ({
+  //     showModal: !showModal,
+  //   }));
+  // };
 
   render() {
-    return (
-      <div>
-        <Searchbar onSubmit={this.handleFormSubmit} />
+    const { query, error, status } = this.state;
+    // const { query } = this.props;
 
-        <ImageGallery query={this.state.query} />
+    if (status === "IDLE") {
+      return (
+        <>
+          <Searchbar onSubmit={this.handleFormSubmit} />
+          <h2>Введите что-то в поиск</h2>;
+          <ToastContainer autoClose={3000} />
+        </>
+      );
+    }
 
-        <ToastContainer autoClose={3000} />
-      </div>
-    );
+    if (status === "PENDING") {
+      return (
+        <>
+          <Searchbar onSubmit={this.handleFormSubmit} />
+          <Loader
+            type="Puff"
+            color="#00BFFF"
+            height={100}
+            width={100}
+            timeout={3000}
+          />
+          <ToastContainer autoClose={3000} />
+        </>
+      );
+    }
+
+    if (status === "REJECTED") {
+      return (
+        <>
+          <Searchbar onSubmit={this.handleFormSubmit} />
+          <h2>{error.message}</h2>;
+          <ToastContainer autoClose={3000} />
+        </>
+      );
+    }
+
+    if (status === "RESOLVED") {
+      return (
+        <div>
+          <Searchbar onSubmit={this.handleFormSubmit} />
+
+          <ImageGallery query={query} />
+
+          <ToastContainer autoClose={3000} />
+        </div>
+      );
+    }
   }
 }
 
 export default App;
 
-//          <Searchbar />
 //         <Button />
 //         <Loader />
 //         <Modal onClose={this.toggleModal} />

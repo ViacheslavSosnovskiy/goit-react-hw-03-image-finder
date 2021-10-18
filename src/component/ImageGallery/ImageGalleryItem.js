@@ -1,11 +1,9 @@
-const ImageGalleryItem = () => {
+const ImageGalleryItem = ({ webformatURL, largeImageURL }) => {
   return (
     <li className="ImageGalleryItem">
-      <img src="" alt="" className="ImageGalleryItem-image" />
+      <img src={webformatURL} alt="" className="ImageGalleryItem-image" />
     </li>
   );
 };
 
 export default ImageGalleryItem;
-
-// {this.props.query.webformatURL}

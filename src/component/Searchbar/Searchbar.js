@@ -11,9 +11,6 @@ class Searchbar extends Component {
 
     if (this.state.query.trim() === "") {
       toast.error("Введите корректно!");
-      // toast.success("Введите корректно!");
-      // toast.warning("Введите корректно!");
-      // toast.info("Введите корректно!");
       return;
     }
 
