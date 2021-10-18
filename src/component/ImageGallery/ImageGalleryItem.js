@@ -7,3 +7,5 @@ const ImageGalleryItem = () => {
 };
 
 export default ImageGalleryItem;
+
+// {this.props.query.webformatURL}

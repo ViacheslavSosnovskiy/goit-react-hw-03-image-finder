@@ -1,28 +1,33 @@
 import { Component } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 // import { ToastContainer } from "react-toastify";
 // import "./App.css";
 
 import ImageGallery from "./ImageGallery";
 import Searchbar from "./Searchbar";
-import Button from "./Button";
-import Loader from "./Loader";
-import Modal from "./Modal";
-
-const KEY = "22984759-30de173458e69cd83eb69d4b0";
-// const URL = `https://pixabay.com/api/?q=что_искать&page=номер_страницы&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`;
+// import Button from "./Button";
+// import Loader from "./Loader";
+// import Modal from "./Modal";
 
 class App extends Component {
   state = {
+    query: "",
     showModal: false,
-    page: 1,
   };
 
-  componentDidMount() {
-    const { page } = this.state;
-    fetch(
-      `https://pixabay.com/api/?q=что_искать&page=${page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-    );
-  }
+  // componentDidMount() {
+  //   // const { page } = this.state;
+  //   fetch()
+  //     // `${BASE_URL}?q=###&page=1&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
+  //     .then((res) => res.json())
+  //     .then(console.log);
+  // }
+
+  handleFormSubmit = (query) => {
+    this.setState({ query });
+  };
 
   toggleModal = () => {
     this.setState(({ showModal }) => ({
@@ -33,16 +38,22 @@ class App extends Component {
   render() {
     return (
       <div>
-        {/* <Searchbar />  */}
-        {/* <Button />
-        <Loader /> */}
-        <Modal onClose={this.toggleModal} />
+        <Searchbar onSubmit={this.handleFormSubmit} />
+
+        <ImageGallery query={this.state.query} />
+
+        <ToastContainer autoClose={3000} />
       </div>
     );
   }
 }
 
 export default App;
+
+//          <Searchbar />
+//         <Button />
+//         <Loader />
+//         <Modal onClose={this.toggleModal} />
 
 // ======================================================== //
 // import { Component } from "react";
