@@ -21,6 +21,7 @@ class App extends Component {
     error: null,
     status: "IDLE",
     // showModal: false,
+    pictures: [],
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -31,8 +32,8 @@ class App extends Component {
     if (prevQuery !== nextQuery) {
       this.setState({ status: "PENDING" });
 
-      FetchApi.searchApi(nextQuery, page)
-        .then((query) => this.setState({ prevState, status: "RESOLVED" }))
+      FetchApi.FetchImages(nextQuery, page)
+        .then((pictures) => this.setState({ prevState, status: "RESOLVED" }))
         .catch((error) => this.setState({ error, status: "REJECTED" }));
       // .finally(() => this.setState({ loading: false }));
     }

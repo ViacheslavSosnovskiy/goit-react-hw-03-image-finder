@@ -1,10 +1,10 @@
 import ImageGalleryItem from "./ImageGalleryItem";
 
-const ImageGallery = ({ query }) => {
+const ImageGallery = ({ pictures }) => {
   return (
     <ul className="ImageGallery">
-      {query.map((item) => (
-        <ImageGalleryItem key={item.id} {...item} />
+      {pictures.map((picture) => (
+        <ImageGalleryItem key={picture.id} {...picture} />
       ))}
     </ul>
   );
