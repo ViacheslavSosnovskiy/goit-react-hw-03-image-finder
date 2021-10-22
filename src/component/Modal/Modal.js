@@ -4,9 +4,13 @@ import { createPortal } from "react-dom";
 const modalRoot = document.getElementById("modal--root");
 
 class Modal extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    window.addEventListener("keydaown", this.handleKeyDown);
+  }
 
-  componentDidUpdate() {}
+  componentDidUpdate() {
+    window.removeEventListener("keydown", this.handleKeyDown);
+  }
 
   handleKeyDown = (e) => {
     if (e.code === "Escape") {
@@ -23,10 +27,8 @@ class Modal extends Component {
 
   render() {
     return createPortal(
-      <div className="Overlay">
-        <div className="Modal">
-          <img src="" alt="" />
-        </div>
+      <div className="Overlay" onClick={this.handleBackdropClick}>
+        <div className="Modal">{this.props.children}</div>
       </div>,
       modalRoot
     );

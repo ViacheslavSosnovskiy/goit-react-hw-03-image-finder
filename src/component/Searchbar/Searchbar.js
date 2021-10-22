@@ -6,20 +6,19 @@ class Searchbar extends Component {
     query: "",
   };
 
+  onInputChange = (e) => {
+    this.setState({ query: e.target.value });
+  };
+
   onSubmitForm = (e) => {
     e.preventDefault();
 
     if (this.state.query.trim() === "") {
-      toast.error("Введите корректно!");
-      return;
+      return toast.error("Введите ghfdbkmyj!");
     }
 
     this.props.onSubmit(this.state.query);
     this.setState({ query: "" });
-  };
-
-  onInputChange = (e) => {
-    this.setState({ query: e.target.value });
   };
 
   render() {
@@ -31,6 +30,7 @@ class Searchbar extends Component {
           </button>
 
           <input
+            value={this.state.query}
             onChange={this.onInputChange}
             className="SearchForm-input"
             type="text"
