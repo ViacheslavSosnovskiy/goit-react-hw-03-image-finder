@@ -14,7 +14,7 @@ class Searchbar extends Component {
     e.preventDefault();
 
     if (this.state.query.trim() === "") {
-      return toast.error("Введите ghfdbkmyj!");
+      return toast.error("Введите корректно!");
     }
 
     this.props.onSubmit(this.state.query);
@@ -23,23 +23,25 @@ class Searchbar extends Component {
 
   render() {
     return (
-      <header className="Searchbar">
-        <form className="SearchForm" onSubmit={this.onSubmitForm}>
-          <button type="submit" className="SearchForm-button">
-            <span className="SearchForm-button-label">Search</span>
-          </button>
+      <>
+        <header className="Searchbar">
+          <form className="SearchForm" onSubmit={this.onSubmitForm}>
+            <button type="submit" className="SearchForm-button">
+              <span className="SearchForm-button-label">Search</span>
+            </button>
 
-          <input
-            value={this.state.query}
-            onChange={this.onInputChange}
-            className="SearchForm-input"
-            type="text"
-            autocomplete="off"
-            autofocus
-            placeholder="Search images and photos"
-          />
-        </form>
-      </header>
+            <input
+              value={this.state.query}
+              onChange={this.onInputChange}
+              className="SearchForm-input"
+              type="text"
+              autocomplete="off"
+              autofocus
+              placeholder="Search images and photos"
+            />
+          </form>
+        </header>
+      </>
     );
   }
 }

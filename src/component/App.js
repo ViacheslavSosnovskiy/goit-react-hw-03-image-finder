@@ -13,6 +13,8 @@ import Searchbar from "./Searchbar";
 import Button from "./Button";
 import Modal from "./Modal";
 
+// import fetchPicture from "../services/fetchApi";
+
 class App extends Component {
   state = {
     query: "",
@@ -32,11 +34,11 @@ class App extends Component {
     if (prevQuery !== nextQuery) {
       this.setState({ pictures: [], page: 1 });
 
-      this.getPictureFetch();
+      this.fetchPicture();
     }
   }
 
-  getPictureFetch = () => {
+  fetchPicture = () => {
     const KEY = "22984759-30de173458e69cd83eb69d4b0";
     const BASE_URL = "https://pixabay.com/api/";
     const { query, page } = this.state;
@@ -48,8 +50,10 @@ class App extends Component {
       .then((res) => res.json())
       .then((array) => {
         const pictures = array.hits;
+        console.log("array", array);
+        console.log("array.hits", array.hits);
         if (pictures.length < 1) {
-          toast.error("Введите корректно vz !");
+          toast.error("Ничего не найдено");
         }
 
         this.setState((prevState) => ({
@@ -69,7 +73,7 @@ class App extends Component {
   };
 
   onLoadMore = () => {
-    this.getPictureFetch();
+    this.fetchPicture();
   };
 
   scroll = () => {
@@ -96,29 +100,30 @@ class App extends Component {
 
     return (
       <>
-        <Searchbar onSubmit={this.handleFormSubmit} />
+        <div>
+          <Searchbar onSubmit={this.handleFormSubmit} />
 
-        {status === "PENDING" && (
-          <Loader
-            type="ThreeDots" // Hearts
-            color="#00BFFF"
-            // secondaryColor="Grey"
-            height={100}
-            width={100}
-            timeout={3000}
+          {status === "PENDING" && (
+            <Loader
+              type="ThreeDots" // Hearts
+              color="#00BFFF"
+              // secondaryColor="Grey"
+              height={100}
+              width={100}
+              timeout={3000}
+            />
+          )}
+          <ImageGallery
+            pictures={pictures}
+            openModalImage={this.openModalImage}
           />
-        )}
-        <ImageGallery
-          pictures={pictures}
-          openModalImage={this.openModalImage}
-        />
-        {showLodeMore && <Button onLoadMore={this.onLoadMore} />}
-        {showModal && (
-          <Modal onClose={this.toggleModal}>
-            <img src={largeImageURL} alt={tags} />
-          </Modal>
-        )}
-
+          {showLodeMore && <Button onLoadMore={this.onLoadMore} />}
+          {showModal && (
+            <Modal onClose={this.toggleModal}>
+              <img src={largeImageURL} alt={tags} />
+            </Modal>
+          )}
+        </div>
         <ToastContainer autoClose={3000} />
       </>
     );
