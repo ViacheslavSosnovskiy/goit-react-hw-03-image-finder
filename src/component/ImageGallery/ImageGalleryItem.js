@@ -11,8 +11,9 @@ const ImageGalleryItem = ({
       <img
         src={webformatURL}
         alt={tags}
+        largeImageURL={largeImageURL}
+        onClick={() => openModalImage({ largeImageURL })}
         className="ImageGalleryItem-image"
-        onClick={() => openModalImage({ largeImageURL, tags })}
       />
     </li>
   );

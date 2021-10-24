@@ -1,13 +1,15 @@
 import { Component } from "react";
 import { toast } from "react-toastify";
 
+import "../App.css";
+
 class Searchbar extends Component {
   state = {
     query: "",
   };
 
   onInputChange = (e) => {
-    this.setState({ query: e.target.value });
+    this.setState({ query: e.target.value.toLowerCase() });
   };
 
   onSubmitForm = (e) => {
@@ -23,25 +25,23 @@ class Searchbar extends Component {
 
   render() {
     return (
-      <>
-        <header className="Searchbar">
-          <form className="SearchForm" onSubmit={this.onSubmitForm}>
-            <button type="submit" className="SearchForm-button">
-              <span className="SearchForm-button-label">Search</span>
-            </button>
+      <header className="Searchbar">
+        <form className="SearchForm" onSubmit={this.onSubmitForm}>
+          <button type="submit" className="SearchForm-button">
+            <span className="SearchForm-button-label">Search</span>
+          </button>
 
-            <input
-              value={this.state.query}
-              onChange={this.onInputChange}
-              className="SearchForm-input"
-              type="text"
-              autocomplete="off"
-              autofocus
-              placeholder="Search images and photos"
-            />
-          </form>
-        </header>
-      </>
+          <input
+            value={this.state.query}
+            onChange={this.onInputChange}
+            className="SearchForm-input"
+            type="text"
+            autoComplete="off"
+            autoFocus
+            placeholder="Search images and photos"
+          />
+        </form>
+      </header>
     );
   }
 }

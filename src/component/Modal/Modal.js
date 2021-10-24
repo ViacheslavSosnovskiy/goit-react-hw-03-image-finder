@@ -5,7 +5,7 @@ const modalRoot = document.getElementById("modal--root");
 
 class Modal extends Component {
   componentDidMount() {
-    window.addEventListener("keydaown", this.handleKeyDown);
+    window.addEventListener("keydown", this.handleKeyDown);
   }
 
   componentDidUpdate() {
