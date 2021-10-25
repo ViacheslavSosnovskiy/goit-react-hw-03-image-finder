@@ -1,14 +1,14 @@
 import ImageGalleryItem from "./ImageGalleryItem";
 import "../App.css";
 
-const ImageGallery = ({ pictures, openModalImage }) => {
+const ImageGallery = ({ images, openModalImage }) => {
   return (
     <ul className="ImageGallery">
-      {pictures.map((picture) => (
+      {images.map((image) => (
         <ImageGalleryItem
-          {...picture}
-          key={picture.id}
+          key={image.id}
           openModalImage={openModalImage}
+          {...image}
         />
       ))}
     </ul>

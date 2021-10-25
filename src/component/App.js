@@ -19,7 +19,7 @@ class App extends Component {
   state = {
     query: "",
     page: 1,
-    pictures: [],
+    images: [],
     error: "",
     largeImageURL: "",
     tags: "",
@@ -45,9 +45,9 @@ class App extends Component {
     this.setState({ isLoading: true });
 
     fetchPicture({ query, page })
-      .then((pictures) => {
+      .then((images) => {
         this.setState((prevState) => ({
-          pictures: [...prevState.pictures, ...pictures],
+          images: [...prevState.images, ...images],
           page: prevState.page + 1,
         }));
       })
@@ -56,7 +56,7 @@ class App extends Component {
   };
 
   handleFormSubmit = (query) => {
-    this.setState({ query, page: 1, pictures: [] });
+    this.setState({ query, page: 1, images: [] });
   };
 
   scroll = () => {
@@ -78,15 +78,12 @@ class App extends Component {
   };
 
   render() {
-    const { pictures, showModal, largeImageURL, tags, isLoading } = this.state;
+    const { images, showModal, largeImageURL, tags, isLoading } = this.state;
 
     return (
       <>
         <Searchbar onSubmit={this.handleFormSubmit} />
-        <ImageGallery
-          pictures={pictures}
-          openModalImage={this.openModalImage}
-        />
+        <ImageGallery images={images} openModalImage={this.openModalImage} />
         {isLoading ? (
           <Loader
             type="ThreeDots" // Hearts
