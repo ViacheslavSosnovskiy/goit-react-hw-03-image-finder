@@ -77,6 +77,10 @@ class App extends Component {
     this.toggleModal();
   };
 
+  onLoadMore = () => {
+    this.getPictureFetch();
+  };
+
   render() {
     const { images, showModal, largeImageURL, tags, isLoading } = this.state;
 
@@ -93,8 +97,10 @@ class App extends Component {
             timeout={3000}
           />
         ) : (
-          this.state.page !== 1 && <Button onLoadMore={this.getPictureFetch} />
+          this.state.page !== 1 && <Button onLoadMore={this.onLoadMore} />
         )}
+        {/* {showLoadMore && <Button onLoadMore={this.onLoadMore} />} */}
+
         {showModal && (
           <Modal onClose={this.toggleModal}>
             <img src={largeImageURL} alt={tags} />

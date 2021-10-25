@@ -1,6 +1,6 @@
-const Button = ({ getPictureFetch }) => {
+const Button = ({ onLoadMore }) => {
   return (
-    <button type="button" onClick={getPictureFetch} className="Button">
+    <button type="button" onClick={onLoadMore} className="Button">
       Load more
     </button>
   );
