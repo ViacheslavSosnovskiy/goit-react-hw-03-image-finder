@@ -82,13 +82,16 @@ class App extends Component {
   };
 
   render() {
-    const { images, showModal, largeImageURL, tags, isLoading } = this.state;
+    const { page, images, showModal, largeImageURL, tags, isLoading } =
+      this.state;
+    const showLoadMore = page !== 1 && images.length > 0 && images.length >= 12;
 
     return (
-      <>
+      <div className="Wrapper">
         <Searchbar onSubmit={this.handleFormSubmit} />
         <ImageGallery images={images} openModalImage={this.openModalImage} />
-        {isLoading ? (
+
+        {isLoading && (
           <Loader
             type="ThreeDots" // Hearts
             color="#00BFFF"
@@ -96,18 +99,17 @@ class App extends Component {
             width={100}
             timeout={3000}
           />
-        ) : (
-          this.state.page !== 1 && <Button onLoadMore={this.onLoadMore} />
         )}
-        {/* {showLoadMore && <Button onLoadMore={this.onLoadMore} />} */}
 
         {showModal && (
           <Modal onClose={this.toggleModal}>
             <img src={largeImageURL} alt={tags} />
           </Modal>
         )}
+
+        {showLoadMore && <Button onLoadMore={this.onLoadMore} />}
         <ToastContainer autoClose={3000} />
-      </>
+      </div>
     );
   }
 }
